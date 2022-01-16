@@ -1,5 +1,6 @@
 #! python3
 
+import numbers
 import matplotlib as plt
 import statistics
 import numpy
@@ -23,29 +24,43 @@ class NumberSet:
                 'mode': self.mode
             }
 
-    def get_mean(self):
+    def get_mean(self, **kwargs):
         '''
         Returns the mean of the data points.
         '''
-        return sum(self.numbers) / len(self.numbers)
+        if 'data' in kwargs:
+            data = kwargs['data']
+        else:
+            data = self.numbers
+        return sum(data) / len(data)
 
-    def get_median(self):
+    def get_median(self, **kwargs):
         '''
         Returns the median of the data points.
-        '''        
-        middle_index = len(self.numbers) // 2
-
-        if len(self.numbers) % 2 == 1:
-            return self.numbers[middle_index]
+        ''' 
+        if 'data' in kwargs:
+            data = kwargs['data']
         else:
-            return sum(self.numbers[middle_index - 1:middle_index + 1]) / 2
+            data = self.numbers
+        
+        middle_index = len(data) // 2
 
-    def get_mode(self):
+        if len(data) % 2 == 1:
+            return data[middle_index]
+        else:
+            return sum(data[middle_index - 1:middle_index + 1]) / 2
+
+    def get_mode(self, **kwargs):
         '''
         Returns a list of most frequently occuring data points.
         '''
+        if 'data' in kwargs:
+            data = kwargs['data']
+        else:
+            data = self.numbers
+        
         count = {}
-        for number in self.numbers:
+        for number in data:
             if number not in count.keys():
                 count[number] = 1
             else:
