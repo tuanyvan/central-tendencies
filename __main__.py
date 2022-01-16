@@ -6,12 +6,15 @@ import statistics
 import numpy
 from math import floor, ceil
 
-class NumberSet:
+class NumberStatistics:
     def __init__(self, numbers: list):
         self.numbers = sorted(numbers)
-        self.mean = self.get_mean()
-        self.median = self.get_median()
-        self.mode = self.get_mode()
+        try:
+            self.mean = self.get_mean()
+            self.median = self.get_median()
+            self.mode = self.get_mode()
+        except ZeroDivisionError:
+            print('Your entry cannot be blank.\n\n')
 
     def set_numbers(self, numbers: list):
         self.__init__(numbers)
@@ -68,7 +71,10 @@ class NumberSet:
         return key
 
 if __name__ == '__main__':
-    number_set = NumberSet([3,4,5,6,6,2,1])
-    print(number_set.__dict__)
-    number_set.set_numbers([1,2,3,5,6,7])
-    print(number_set.__dict__)
+    while True:
+        number_list = NumberStatistics([float(x) for x in input('Enter the list items: ').split()])
+
+        if number_list.numbers == []: continue
+        for key in number_list.__dict__.keys():
+            print(f"{key}:".ljust(10, ' ') + str(number_list.__dict__[key]))
+        print('\n')
