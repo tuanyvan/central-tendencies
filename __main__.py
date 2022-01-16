@@ -8,6 +8,20 @@ from math import floor, ceil
 class NumberSet:
     def __init__(self, numbers: list):
         self.numbers = sorted(numbers)
+        self.mean = self.get_mean()
+        self.median = self.get_median()
+        self.mode = self.get_mode()
+
+    def set_numbers(self, numbers: list):
+        self.__init__(numbers)
+
+    def get_state(self):
+        return {
+                'numbers': self.numbers,
+                'mean': self.mean,
+                'median': self.median,
+                'mode': self.mode
+            }
 
     def get_mean(self):
         '''
@@ -48,4 +62,6 @@ class NumberSet:
 
 if __name__ == '__main__':
     number_set = NumberSet([3,4,5,6,6,2,1])
-
+    print(number_set.get_state())
+    number_set.set_numbers([1,2,3,5,6,7])
+    print(number_set.get_state())
