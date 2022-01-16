@@ -16,14 +16,6 @@ class NumberSet:
     def set_numbers(self, numbers: list):
         self.__init__(numbers)
 
-    def get_state(self):
-        return {
-                'numbers': self.numbers,
-                'mean': self.mean,
-                'median': self.median,
-                'mode': self.mode
-            }
-
     def get_mean(self, **kwargs):
         '''
         Returns the mean of the data points.
@@ -77,6 +69,6 @@ class NumberSet:
 
 if __name__ == '__main__':
     number_set = NumberSet([3,4,5,6,6,2,1])
-    print(number_set.get_state())
+    print(number_set.__dict__)
     number_set.set_numbers([1,2,3,5,6,7])
-    print(number_set.get_state())
+    print(number_set.__dict__)
