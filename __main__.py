@@ -43,7 +43,7 @@ class NumberStatistics:
         if len(data) % 2 == 1:
             return data[middle_index]
         else:
-            return sum(data[middle_index - 1:middle_index + 1]) / 2
+            return (data[middle_index - 1] + data[middle_index]) / 2
 
     def get_mode(self, **kwargs):
         '''
