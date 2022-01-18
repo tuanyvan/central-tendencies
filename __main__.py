@@ -14,15 +14,6 @@ class NumberStatistics:
             self.q1 = self.get_median(data=[x for x in self.numbers if x < self.median])
             self.q2 = self.median
             self.q3 = self.get_median(data=[x for x in self.numbers if x > self.median])
-            self.p10 = self.get_percentile(p=10)
-            self.p20 = self.get_percentile(p=20)
-            self.p30 = self.get_percentile(p=30)
-            self.p40 = self.get_percentile(p=40)
-            self.p50 = self.get_percentile(p=50)
-            self.p60 = self.get_percentile(p=60)
-            self.p70 = self.get_percentile(p=70)
-            self.p80 = self.get_percentile(p=80)
-            self.p90 = self.get_percentile(p=90)
 
         except ZeroDivisionError:
             print('Your entry cannot be blank.\n\n')
