@@ -1,9 +1,6 @@
 #! python3
 
-import numbers
 import matplotlib as plt
-import statistics
-import numpy
 from math import floor, ceil
 
 class NumberStatistics:
@@ -13,31 +10,46 @@ class NumberStatistics:
             self.mean = self.get_mean()
             self.median = self.get_median()
             self.mode = self.get_mode()
+            self.q1 = self.get_median(data=[x for x in self.numbers if x < self.median])
+            self.q2 = self.median
+            self.q3 = self.get_median(data=[x for x in self.numbers if x > self.median])
         except ZeroDivisionError:
             print('Your entry cannot be blank.\n\n')
+    
+    def find_data(self, kwarg_list):
+        '''
+        Looks for 'data' in kwargs and returns it, otherwise returns self.numbers
+        '''
+        if 'data' in kwarg_list:
+            return kwarg_list['data']
+        else:
+            return self.numbers
+
+    def calculate_statistics(function):
+        '''
+        Wrapper function to reduce calls to self.find_data().
+        '''
+        def calculation(self, **kwargs):
+            data = self.find_data(kwargs)
+            tendency = function(data)
+            return tendency
+        return calculation
 
     def set_numbers(self, numbers: list):
         self.__init__(numbers)
 
-    def get_mean(self, **kwargs):
+    @calculate_statistics
+    def get_mean(data):
         '''
         Returns the mean of the data points.
         '''
-        if 'data' in kwargs:
-            data = kwargs['data']
-        else:
-            data = self.numbers
         return sum(data) / len(data)
 
-    def get_median(self, **kwargs):
+    @calculate_statistics
+    def get_median(data):
         '''
         Returns the median of the data points.
-        ''' 
-        if 'data' in kwargs:
-            data = kwargs['data']
-        else:
-            data = self.numbers
-        
+        '''         
         middle_index = len(data) // 2
 
         if len(data) % 2 == 1:
@@ -45,15 +57,12 @@ class NumberStatistics:
         else:
             return (data[middle_index - 1] + data[middle_index]) / 2
 
-    def get_mode(self, **kwargs):
+    @calculate_statistics
+    def get_mode(data):
         '''
         Returns a list of most frequently occuring data points.
         '''
-        if 'data' in kwargs:
-            data = kwargs['data']
-        else:
-            data = self.numbers
-        
+
         count = {}
         for number in data:
             if number not in count.keys():
@@ -76,5 +85,5 @@ if __name__ == '__main__':
 
         if number_list.numbers == []: continue
         for key in number_list.__dict__.keys():
-            print(f"{key}:".ljust(10, ' ') + str(number_list.__dict__[key]))
+            print(f"{key}:".ljust(15, ' ') + str(number_list.__dict__[key]))
         print('\n')
