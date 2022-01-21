@@ -108,10 +108,10 @@ class NumberStatistics:
 
 if __name__ == '__main__':
 
-    # Instantiate the Figure and axes.Axes object.
-    fig, ax = plt.subplots(figsize=(5,5), constrained_layout=True)
-
     while True:
+
+        # Instantiate the Figure and axes.Axes object.
+        fig, ax = plt.subplots(figsize=(5,5), constrained_layout=True)
 
         # Get user number input.
         numbers = NumberStatistics([float(x) for x in input('Enter the list items: ').split()])
@@ -123,5 +123,9 @@ if __name__ == '__main__':
             print(f"{key}:".ljust(15, ' ') + str(numbers.__dict__[key]))
         print('\n')
 
-        # Create a whisker plot using the information of the object.
-        ax.plot([x for x in range(1, len(numbers.items) + 1)], numbers.items)
+        # Create a boxplot using the information of the object.
+        ax.boxplot(numbers.items, vert=False, whis=1.5, meanline=True, showmeans=True)
+        ax.set_title('Boxplot Given User Data Input')
+        
+        plt.show()
+
