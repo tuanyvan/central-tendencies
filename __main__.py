@@ -1,31 +1,31 @@
 #! python3
 
-import matplotlib as plt
+import matplotlib.pyplot as plt
 from math import floor, ceil
 
 class NumberStatistics:
-    def __init__(self, numbers: list):
-        self.numbers = sorted(numbers)
+    def __init__(self, items: list):
+        self.items = sorted(items)
         try:
 
             self.mean = self.get_mean()
             self.median = self.get_median()
             self.mode = self.get_mode()
-            self.q1 = self.get_median(data=[x for x in self.numbers if x < self.median])
+            self.q1 = self.get_median(data=[x for x in self.items if x < self.median])
             self.q2 = self.median
-            self.q3 = self.get_median(data=[x for x in self.numbers if x > self.median])
+            self.q3 = self.get_median(data=[x for x in self.items if x > self.median])
 
         except ZeroDivisionError:
             print('Your entry cannot be blank.\n\n')
     
     def find_data(self, kwarg_list):
         '''
-        Looks for 'data' in kwargs and returns it, otherwise returns self.numbers
+        Looks for 'data' in kwargs and returns it, otherwise returns self.items
         '''
         if 'data' in kwarg_list:
             return kwarg_list['data']
         else:
-            return self.numbers
+            return self.items
 
     def calculate_statistics(function):
         '''
@@ -40,8 +40,8 @@ class NumberStatistics:
             return tendency
         return calculation
 
-    def set_numbers(self, numbers: list):
-        self.__init__(numbers)
+    def set_items(self, items: list):
+        self.__init__(items)
 
     @calculate_statistics
     def get_mean(data):
@@ -107,10 +107,21 @@ class NumberStatistics:
 
 
 if __name__ == '__main__':
-    while True:
-        number_list = NumberStatistics([float(x) for x in input('Enter the list items: ').split()])
 
-        if number_list.numbers == []: continue
-        for key in number_list.__dict__.keys():
-            print(f"{key}:".ljust(15, ' ') + str(number_list.__dict__[key]))
+    # Instantiate the Figure and axes.Axes object.
+    fig, ax = plt.subplots(figsize=(5,5), constrained_layout=True)
+
+    while True:
+
+        # Get user number input.
+        numbers = NumberStatistics([float(x) for x in input('Enter the list items: ').split()])
+
+        if numbers.items == []: continue
+        
+        # Print all the properties of the numbers.
+        for key in numbers.__dict__.keys():
+            print(f"{key}:".ljust(15, ' ') + str(numbers.__dict__[key]))
         print('\n')
+
+        # Create a whisker plot using the information of the object.
+        ax.plot([x for x in range(1, len(numbers.items) + 1)], numbers.items)
