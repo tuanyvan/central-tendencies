@@ -14,6 +14,9 @@ class NumberStatistics:
             self.q1 = self.get_median(data=[x for x in self.items if x < self.median])
             self.q2 = self.median
             self.q3 = self.get_median(data=[x for x in self.items if x > self.median])
+            self.iqr = self.q3 - self.q1
+            self.lower_whisker = self.q1 - 1.5 * self.iqr
+            self.upper_whisker = self.q3 + 1.5 * self.iqr
 
         except ZeroDivisionError:
             print('Your entry cannot be blank.\n\n')
